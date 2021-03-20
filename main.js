@@ -1,6 +1,8 @@
 const path = require('path')
 const url = require('url')
 const { app, BrowserWindow } = require('electron')
+const {autoUpdater} = require("electron-updater");
+
 
 let mainWindow
 
@@ -29,7 +31,7 @@ function createMainWindow() {
 	if (isDev && process.argv.indexOf('--noDevServer') === -1) {
 		indexPath = url.format({
 			protocol: 'http:',
-			host: 'localhost:8080',
+			host: 'localhost:8081',
 			pathname: 'index.html',
 			slashes: true,
 		})
@@ -80,3 +82,7 @@ app.on('activate', () => {
 
 // Stop error
 app.allowRendererProcessReuse = true
+
+app.on('ready', function()  {
+	autoUpdater.checkForUpdatesAndNotify();
+  });
